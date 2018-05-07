@@ -1,14 +1,14 @@
 # Getting Started
-This documents briefly describes how to install and use the code.
+This document briefly describes how to install and use the code.
 
 ## Environment
 We conducted experiments in the following environment:
  - Linux
  - Python 3
- - 2 TITAN X GPUs with CuDNN
+ - TITAN X GPUs with CuDNN
  - FFmpeg
 
-Similar environments (e.g. with OSX, Python 2, ffmepg 2.x) might work with small modification, but not tested.
+Similar environments (e.g. with OSX, Python 2) might work with small modification, but not tested.
 
 
 ## Datasets
@@ -60,7 +60,7 @@ from coviar import load
 load([input], [gop_index], [frame_index], [representation_type], [accumulate])
 ```
  - input: path to video (.mp4).
- - representation_type: `0`, `1`, or `2`. `0` for iframes, `1` for motion vectors, `2` for residuals.
+ - representation_type: `0`, `1`, or `2`. `0` for I-frames, `1` for motion vectors, `2` for residuals.
  - accumulate: `True` or `False`. `True` returns the accumulated representation. `False` returns the original compressed representations. (See paper for details. )
 
 For example, 
@@ -73,7 +73,7 @@ returns the accumulated motion vectors of the 9th frame of the 4th GOP.
 
 For example, we used the following commands to train on HMDB-51.
 ```bash
-# Iframe model.
+# I-frame model.
 python train.py --lr 0.0003 --batch-size 40 --arch resnet152 \
  	--data-name hmdb51 --representation iframe \
  	--data-root data/hmdb51/mpeg4_videos \
@@ -106,7 +106,7 @@ python train.py --lr 0.001 --batch-size 80 --arch resnet18 \
 ```
 and for UCF-101, 
 ```bash
-# Iframe model.
+# I-frame model.
 python train.py --lr 0.0003 --batch-size 80 --arch resnet152 \
  	--data-name ucf101 --representation iframe \
  	--data-root data/ucf101/mpeg4_videos \
@@ -158,11 +158,11 @@ python test.py --gpus 0 \
 	--save-scores [output score filename]
 
 ```
-performs full evaluation on the test set, and store the results in `[output score filename]`.
+performs full evaluation on the test set, and stores the results in `[output score filename]`.
 
 ## Combining models to get final results
 After getting the evaluation results for each decoupled model using `test.py`,
-we use `combine.py` to combine the results and calculates
+we use `combine.py` to combine the results and calculate
 the final accuracy.
 ```bash
 python combine.py --iframe ${iframe_score_file} \

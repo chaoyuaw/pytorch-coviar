@@ -1,6 +1,6 @@
 """
 Definition of PyTorch "Dataset" that iterates through compressed videos
-and return compressed representation (Iframe, motion vectors, 
+and return compressed representations (I-frames, motion vectors, 
 or residuals) for training or testing.
 """
 
